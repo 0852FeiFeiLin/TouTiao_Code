@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新闻详情</title>
+    <link rel="stylesheet" href="/static/css/news.css">
+</head>
+<body>
+<!--利用模板语法，遍历展示结构体里面的数据(注意，结构体里面的数据弄成集合map才能进行range)
+，然后各便签设置属性对应结构体的参数-->
+<div class="box1">
+    <a href="/news?type=guonei" name="type">国内</a>
+    <div class="xian"></div>
+    <a href="/news?type=guoji" name="type">国际</a>
+    <div class="xian"></div>
+    <a href="/news?type=yule" name="type">娱乐</a>
+    <div class="xian"></div>
+    <a href="/news?type=tiyu" name="type">体育</a>
+    <div class="xian"></div>
+    <a href="/news?type=junshi" name="type">军事</a>
+    <div class="xian"></div>
+    <a href="/news?type=keji" name="type">科技</a>
+    <div class="xian"></div>
+    <a href="/news?type=caijing" name="type">财经</a>
+    <div class="xian"></div>
+    <a href="/news?type=shishang" name="type">时尚</a>
+    <div class="xian"></div>
+    <a href="/news?type=youxi">游戏</a>
+    <div class="xian"></div>
+    <a href="/news?type=qiche">汽车</a>
+    <div class="xian"></div>
+    <a href="/news?type=jiankang">健康</a>
+</div>
+<br>
+<ul class="news">
+    {{range .News}}
+        <li>
+            <!--一个li里面有标题，图片，超链接,日期 -->
+            <a class="ImagA" href="{{.Url}}">
+                <img src="{{.Thumbnail_pic_s}}" width="200px">
+            </a>
+            <div class="content">
+                <!--这里是内容=标题url + 描述 + date日期 -->
+                <h2>
+                    <a href="{{.Url}}">
+                        {{.Title}}
+                    </a>
+                </h2>
+                <p>{{.AuthorName}}</p>
+                <p>{{.Date}}</p>
+            </div>
+        </li>
+    {{end}}
+
+</ul>
+
+<!--这个展示下面的页数导航栏 害需要完善，li里面放a标签-->
+<!--通过模板语法的if判断，然后实现具体操作 -->
+<div style="clear: both"></div>
+<br>
+<br>
+<br>
+<div id="pagenation">
+    <ul class="pages">
+        <!-- eq / ne / lt / le / gt / ge
+            这类函数一般配合在 if 中使用
+            eq: arg1 == arg2
+            ne: arg1 != arg2
+            lt: arg1 < arg2
+            le: arg1 <= arg2
+            gt: arg1 > arg2
+            ge: arg1 >= arg2
+            eq 和其他函数不一样的是，支持多个参数-->
+        <!--如果当前页数大于1 -->
+        {{if gt .Page.CurrentPage 1}}
+            <li><a href="/news?type={{.Page.NewsType}}&page={{.Page.PrePage}}">上一页</a></li>
+        {{else}}
+            <li style="color: darkgrey"  ></li>
+        {{end}}
+
+        {{.Pages}}
+        <!--如果当前页数小于总页数 -->
+        {{if lt .Page.CurrentPage .Page.PageCount}}
+            <li><a href="/news?type={{.Page.NewsType}}&page={{.Page.NextPage}}">下一页</a></li>
+        {{else}}
+            <li style="color: darkgrey"></li>
+        {{end}}
+    </ul>
+</div>
+<br>
+<span>
+<a href="/index.html">返回搜索页面~</a>
+</span>
+
+<!--
+        <li><a href="/news?type={{.Type}}&page=1" >{{.Page}}</a></li>
+        <li><a href="/news?type={{.Type}}&page=2" value="2">2</a></li>
+        <li><a href="/news?type={{.Type}}&page=3" value="3">3</a></li>
+        <li><a href="/news?type={{.Type}}&page=4" value="4">4</a></li>
+        <li><a href="/news?type={{.Type}}&page=5" value="5">5</a></li>
+        <li><a href="/news?type={{.Type}}&page=6" value="6">6</a></li>
+        <li><a href="/news?type={{.Type}}&page=7" value="7">7</a></li>
+        <li><a href="/news?type={{.Type}}&page=8" value="8">8</a></li>
+-->
+
+
+</body>
+</html>

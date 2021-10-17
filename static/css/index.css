@@ -1,0 +1,11 @@
+body{
+    background-image: url("/static/img/bg2.jpg");
+    background-repeat: no-repeat;
+    text-align: center;
+}
+
+form{
+    line-height: 30px;
+    position: relative;
+    top: 80px;
+}
